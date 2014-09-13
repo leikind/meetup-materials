@@ -50,7 +50,7 @@ ExUnit.start
 defmodule RomanNumeralTest do
   use ExUnit.Case
 
-  test "convertion works" do
+  test "conversion works" do
 
     assert RomanNumeral.convert("XX")     == 20
     assert RomanNumeral.convert("XXII")   == 22

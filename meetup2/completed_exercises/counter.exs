@@ -21,7 +21,7 @@ defmodule Counter do
   @doc "A simple counter showing how to manage state using processes"
 
   @doc "Creates a new counter, initialized to 0"
-  def new do
+  def start do
     spawn_link(fn -> loop(0) end)
   end
 
@@ -79,12 +79,12 @@ defmodule CounterTest do
   use ExUnit.Case
 
   test "counter starts at 0" do
-    c = Counter.new
+    c = Counter.start
     assert 0 == Counter.value(c)
   end
 
   test "counter incrementation" do
-    c = Counter.new
+    c = Counter.start
     Counter.inc(c)
     Counter.inc(c)
     Counter.inc(c)
@@ -92,7 +92,7 @@ defmodule CounterTest do
   end
 
   test "counter decrementation" do
-    c = Counter.new
+    c = Counter.start
     Counter.inc(c)
     Counter.dec(c)
     Counter.inc(c)
@@ -100,14 +100,14 @@ defmodule CounterTest do
   end
 
   test "counter decrementation below zero" do
-    c = Counter.new
+    c = Counter.start
     assert_raise ArgumentError, fn -> Counter.dec(c) end
   end
 
   test "multiple counters" do
-    c1 = Counter.new
-    c2 = Counter.new
-    c3 = Counter.new
+    c1 = Counter.start
+    c2 = Counter.start
+    c3 = Counter.start
     Counter.inc(c1)
     Counter.inc(c2)
     Counter.inc(c2)
@@ -117,7 +117,7 @@ defmodule CounterTest do
   end
 
   test "terminate returns final value of counter" do
-    c = Counter.new
+    c = Counter.start
     Counter.inc(c)
     assert 1 == Counter.terminate(c)
   end

@@ -79,6 +79,10 @@ ExUnit.start
 defmodule CounterTest do
   use ExUnit.Case
 
+  #
+  # Step 1
+  #
+
   test "counter starts at 0" do
     c = Counter.start
     assert 0 == Counter.value(c)
@@ -90,19 +94,6 @@ defmodule CounterTest do
     Counter.inc(c)
     Counter.inc(c)
     assert 3 == Counter.value(c)
-  end
-
-  test "counter decrementation" do
-    c = Counter.start
-    Counter.inc(c)
-    Counter.dec(c)
-    Counter.inc(c)
-    assert 1 == Counter.value(c)
-  end
-
-  test "counter decrementation below zero" do
-    c = Counter.start
-    assert_raise ArgumentError, fn -> Counter.dec(c) end
   end
 
   test "multiple counters" do
@@ -121,6 +112,27 @@ defmodule CounterTest do
     c = Counter.start
     Counter.inc(c)
     assert 1 == Counter.terminate(c)
+  end
+
+  #
+  # Step 2
+  #
+
+  test "counter decrementation" do
+    c = Counter.start
+    Counter.inc(c)
+    Counter.dec(c)
+    Counter.inc(c)
+    assert 1 == Counter.value(c)
+  end
+
+  #
+  # Step 3
+  #
+
+  test "counter decrementation below zero" do
+    c = Counter.start
+    assert_raise ArgumentError, fn -> Counter.dec(c) end
   end
 
 end

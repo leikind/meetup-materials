@@ -1,3 +1,9 @@
+#
+# Write a parallel map function which, given an enumerable and a function,
+# will apply the function to all items *concurrently* and return a list with
+# the results of the transformation.
+#
+
 defmodule Parallel do
 
   def map(enumerable, func) do
@@ -41,7 +47,7 @@ defmodule ParallelTest do
   end
 
   test "it maps large enumerables" do
-    assert [0, 1, 4, 9, 16|_] = Parallel.map(0..99999, fn (x) -> x*x end)
+    assert [0, 1, 4, 9, 16, 25, 36|_] = Parallel.map(0..99999, fn (x) -> x*x end)
   end
 
 end

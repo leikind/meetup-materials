@@ -1,3 +1,8 @@
+#
+# Write a function which flushes the mailbox of the current process and returns
+# a list with the pending messages
+#
+
 defmodule Mailbox do
 
   def flush() do

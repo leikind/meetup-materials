@@ -2,8 +2,9 @@
 # Let's extend our little counter process example!
 #
 # Your tasks:
-#  1) Add a new Counter.dec/1 public function which decrements the counter, make sure your write a test case for it
-#  2) A counter must always remain >= 0, make sure an exception is raised otherwise.
+#  1) Implement an incrementable counter based on public API described below
+#  2) Add a new Counter.dec/1 public function which decrements the counter, make sure your write a test case for it
+#  3) A counter must always remain >= 0, make sure an exception is raised otherwise.
 #
 #     You can raise an exception with:
 #

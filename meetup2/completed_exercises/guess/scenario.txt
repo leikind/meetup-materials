@@ -1,0 +1,10 @@
+start server:
+
+iex --cookie devspace --name guess_server_node
+
+> c("guess_server.exs")
+> GuessServer.start_link(42)
+
+
+
+elixir --cookie devspace --name sample_client  guess_clent_example.exs

@@ -3,8 +3,6 @@
 # will apply the function to all items *concurrently* and return a list with
 # the results of the transformation.
 #
-# You can use functions from the Enum module to complete this exercise
-#
 
 defmodule Parallel do
 
@@ -15,20 +13,9 @@ defmodule Parallel do
   end
 
   defp spawn_mapping_processes(enumerable, func) do
-    parent_pid = self
-    Enum.map enumerable, fn (item) ->
-      spawn_link(fn ->
-        send parent_pid, {self, func.(item)}
-      end)
-    end
   end
 
   defp collect_results(pids) do
-    Enum.map pids, fn (pid) ->
-      receive do
-        {^pid, mapped_item} -> mapped_item
-      end
-    end
   end
 
 end

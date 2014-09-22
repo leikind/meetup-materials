@@ -54,9 +54,3 @@ defmodule GuessClientExample do
 end
 
 GuessClientExample.guess(2)
-
-# IO.inspect Node.list
-# Node.connect(:'guess_server_node@sweetdream.local')
-# IO.inspect Node.list
-
-#

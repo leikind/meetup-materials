@@ -3,6 +3,8 @@
 # will apply the function to all items *concurrently* and return a list with
 # the results of the transformation.
 #
+# You can use functions from the Enum module to complete this exercise
+#
 
 defmodule Parallel do
 

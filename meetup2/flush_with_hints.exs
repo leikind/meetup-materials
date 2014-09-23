@@ -10,11 +10,6 @@ defmodule Mailbox do
   end
 
   defp collect_messages(messages) do
-    receive do
-      message -> collect_messages([message|messages])
-    after
-      0 -> Enum.reverse(messages)
-    end
   end
 
 end
@@ -32,8 +27,9 @@ defmodule MailboxTest do
     assert [:a, {:b, :c}, [:d]] == Mailbox.flush()
   end
 
-  test "flush returns an empty list when the mailbox is empty" do
-    assert [] == Mailbox.flush()
-  end
+  # Uncomment this test case when the first test passes
+  # test "flush returns an empty list when the mailbox is empty" do
+  #   assert [] == Mailbox.flush()
+  # end
 
 end

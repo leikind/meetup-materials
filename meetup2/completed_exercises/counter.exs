@@ -2,8 +2,9 @@
 # Let's extend our little counter process example!
 #
 # Your tasks:
-#  1) Add a new Counter.dec/1 public function which decrements the counter, make sure your write a test case for it
-#  2) A counter must always remain >= 0, make sure an exception is raised otherwise.
+#  1) Implement an incrementable counter based on public API described below
+#  2) Add a new Counter.dec/1 public function which decrements the counter, make sure your write a test case for it
+#  3) A counter must always remain >= 0, make sure an exception is raised otherwise.
 #
 #     You can raise an exception with:
 #
@@ -21,7 +22,7 @@ defmodule Counter do
   @doc "A simple counter showing how to manage state using processes"
 
   @doc "Creates a new counter, initialized to 0"
-  def new do
+  def start do
     spawn_link(fn -> loop(0) end)
   end
 
@@ -78,36 +79,27 @@ ExUnit.start
 defmodule CounterTest do
   use ExUnit.Case
 
+  #
+  # Step 1
+  #
+
   test "counter starts at 0" do
-    c = Counter.new
+    c = Counter.start
     assert 0 == Counter.value(c)
   end
 
   test "counter incrementation" do
-    c = Counter.new
+    c = Counter.start
     Counter.inc(c)
     Counter.inc(c)
     Counter.inc(c)
     assert 3 == Counter.value(c)
   end
 
-  test "counter decrementation" do
-    c = Counter.new
-    Counter.inc(c)
-    Counter.dec(c)
-    Counter.inc(c)
-    assert 1 == Counter.value(c)
-  end
-
-  test "counter decrementation below zero" do
-    c = Counter.new
-    assert_raise ArgumentError, fn -> Counter.dec(c) end
-  end
-
   test "multiple counters" do
-    c1 = Counter.new
-    c2 = Counter.new
-    c3 = Counter.new
+    c1 = Counter.start
+    c2 = Counter.start
+    c3 = Counter.start
     Counter.inc(c1)
     Counter.inc(c2)
     Counter.inc(c2)
@@ -117,9 +109,30 @@ defmodule CounterTest do
   end
 
   test "terminate returns final value of counter" do
-    c = Counter.new
+    c = Counter.start
     Counter.inc(c)
     assert 1 == Counter.terminate(c)
+  end
+
+  #
+  # Step 2
+  #
+
+  test "counter decrementation" do
+    c = Counter.start
+    Counter.inc(c)
+    Counter.dec(c)
+    Counter.inc(c)
+    assert 1 == Counter.value(c)
+  end
+
+  #
+  # Step 3
+  #
+
+  test "counter decrementation below zero" do
+    c = Counter.start
+    assert_raise ArgumentError, fn -> Counter.dec(c) end
   end
 
 end

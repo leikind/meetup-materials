@@ -9,26 +9,6 @@
 defmodule Parallel do
 
   def map(enumerable, func) do
-    enumerable
-      |> spawn_mapping_processes(func)
-      |> collect_results
-  end
-
-  defp spawn_mapping_processes(enumerable, func) do
-    parent_pid = self
-    Enum.map enumerable, fn (item) ->
-      spawn_link(fn ->
-        send parent_pid, {self, func.(item)}
-      end)
-    end
-  end
-
-  defp collect_results(pids) do
-    Enum.map pids, fn (pid) ->
-      receive do
-        {^pid, mapped_item} -> mapped_item
-      end
-    end
   end
 
 end

@@ -3,18 +3,14 @@
 #
 # Your tasks:
 #  1) Implement an incrementable counter based on public API described below
-#  2) Add a new Counter.dec/1 public function which decrements the counter, make sure your write a test case for it
+#  2) Add a new Counter.dec/1 public function which decrements the counter
 #  3) A counter must always remain >= 0, make sure an exception is raised otherwise.
 #
 #     You can raise an exception with:
 #
-#       raise ArgumentError
+#       raise ArgumentError, "error message"
 #
-#     Testing exceptions is straightforward:
-#
-#        assert_raise SomeException, fn ->
-#          ... some code supposed to raise SomeException ...
-#        end
+#  Make baby steps and uncomment the test cases as you make progress
 #
 
 defmodule Counter do
@@ -130,9 +126,12 @@ defmodule CounterTest do
   # Step 3
   #
 
+  # The style of this test is highly unorthodox :)
   test "counter decrementation below zero" do
+    Process.flag(:trap_exit, true)
     c = Counter.start
-    assert_raise ArgumentError, fn -> Counter.dec(c) end
+    Counter.dec(c)
+    assert_receive {:EXIT, ^c, {%ArgumentError{message: _}, _}}, 1_000
   end
 
 end

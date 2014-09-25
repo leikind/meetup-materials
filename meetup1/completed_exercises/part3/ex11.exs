@@ -10,6 +10,7 @@ defmodule Parentheses do
     count(characters, 0) == 0
   end
 
+  # !
   defp count(_, accu) when accu < 0, do: accu
 
   defp count([], accu), do: accu

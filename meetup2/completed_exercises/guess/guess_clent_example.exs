@@ -2,7 +2,7 @@
 
 defmodule GuessClientExample do
 
-  @remote_node  :'guess_server_node@sweetdream.local'
+  @remote_node      :'guess@192.168.1.37'
   @remote_pid_name  :guess_number_server
 
   @my_name  "Yuri"
@@ -13,27 +13,27 @@ defmodule GuessClientExample do
     case request_response(initial_number) do
       :correct              -> won(initial_number)
       {:too_late, message}  -> lost(message)
-      more_or_less  -> guess(more_or_less, initial_number, @initial_step)
+      more_or_less          -> guess(more_or_less, initial_number, @initial_step)
     end
   end
 
-  defp guess(:less, than, step) do
+  defp guess(:your_guess_is_less_than_the_number, than, step) do
     number = than + step
     case request_response(number) do
-      :correct   -> won(number)
-      {:too_late, message}  -> lost(message)
-      :less      -> guess(:less, number,  step)
-      :more      -> guess(:more, number, div(step, 2))
+      :correct                             -> won(number)
+      {:too_late, message}                 -> lost(message)
+      :your_guess_is_less_than_the_number  -> guess(:your_guess_is_less_than_the_number, number,  step)
+      :your_guess_is_more_than_the_number  -> guess(:your_guess_is_more_than_the_number, number, div(step, 2))
     end
   end
 
-  defp guess(:more, than, step) do
+  defp guess(:your_guess_is_more_than_the_number, than, step) do
     number = than - step
     case request_response(number) do
-      :correct              -> won(number)
-      {:too_late, message}  -> lost(message)
-      :less                 -> guess(:less, number, div(step, 2))
-      :more                 -> guess(:more, number, step)
+      :correct                             -> won(number)
+      {:too_late, message}                 -> lost(message)
+      :your_guess_is_less_than_the_number  -> guess(:your_guess_is_less_than_the_number, number, div(step, 2))
+      :your_guess_is_more_than_the_number  -> guess(:your_guess_is_more_than_the_number, number, step)
     end
   end
 
